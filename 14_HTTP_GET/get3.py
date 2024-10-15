@@ -1,0 +1,10 @@
+import urequests
+response = urequests.get('http://jsonplaceholder.typicode.com/albums/1')
+print(type(response))
+print(response.text)
+print(type(response.text))
+parsed = response.json()
+print(type(parsed))
+print(parsed["userId"])
+print(parsed["id"])
+print(parsed["title"])

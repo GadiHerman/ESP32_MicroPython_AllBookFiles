@@ -1,0 +1,12 @@
+import urequests
+response = urequests.get('https://api.openweathermap.org/data/2.5/weather?lat=32.000&lon=35.000&appid=99eXXXXXXX4142')
+#print(type(response))
+#print(response.text)
+#print(type(response.text))
+parsed = response.json()
+#print(type(parsed))
+#print(parsed["main"])
+#print(parsed["main"]["temp_max"]- 273.15)
+print("temperature: ",parsed["main"]["temp"]- 273.15)
+#print(parsed["main"]["temp_min"]- 273.15)
+print("humidity: ",parsed["main"]["humidity"])
