@@ -1,0 +1,17 @@
+{
+    "utc_offset": "+03:00",
+    "timezone": "Asia/Jerusalem",
+    "day_of_week": 1,
+    "day_of_year": 295,
+    "datetime": "2024-10-21T14:49:25.694932+03:00",
+    "utc_datetime": "2024-10-21T11:49:25.694932+00:00",
+    "unixtime": 1729511365,
+    "raw_offset": 7200,
+    "week_number": 43,
+    "dst": true,
+    "abbreviation": "IDT",
+    "dst_offset": 3600,
+    "dst_from": "2024-03-29T00:00:00+00:00",
+    "dst_until": "2024-10-26T23:00:00+00:00",
+    "client_ip": "77.137.23.74"
+  }
