@@ -16,10 +16,10 @@ Baudrate for at-comand mode in HC05: 38400
 Baudrate for at-comand mode in HC06: 9600
 
 """
-NAME = "MGKBluetooth4"
+NAME = "HC05_MGK3"
 PASSWORD = "1234"
-
-uart2 = UART(2,baudrate=9600)   # at-comand baudrate for HC06 
+uart2 = UART(2,baudrate=38400)    # at-comand baudrate for HC05
+# uart2 = UART(2,baudrate=9600)   # at-comand baudrate for HC06 
 print(uart2)
 
 #2 sec timeout is arbitrarily chosen
@@ -38,6 +38,7 @@ def waitResp(uart=uart2, timeout=2000):
     print(decoded_string)
 
 #commands for HC-06 version:   VERSION:3.0-20170609
+#commands for HC-05 version:   VERSION:2.0-20100601
 print("---- Start ----")
 waitResp()
 sendAT("AT\r\n")
@@ -47,7 +48,7 @@ sendAT("AT+UART?\r\n")
 sendAT("AT+UART=9600,0,0\r\n")  #9600 baud, 1 stop, parity=none
 sendAT("AT+UART?\r\n")
 sendAT("AT+PSWD?\r\n")
-sendAT("AT+PSWD=\""+PASSWORD+"\"\r\n")  #Set PIN = "1234"
+sendAT("AT+PSWD=\""+PASSWORD+"\"\r\n") 
 sendAT("AT+PSWD?\r\n")
 sendAT("AT+NAME=\""+NAME+"\"\r\n")
 sendAT("AT+NAME?\r\n")

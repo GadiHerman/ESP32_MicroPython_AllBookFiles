@@ -31,7 +31,7 @@ async def ConnectionTask():
             print("Connection from", con.device)
             await con.disconnected()           
         except asyncio.CancelledError:
-            print("Peripheral task cancelled")
+            print("Peripheral task canceled")
         except Exception as e:
             print("Error in ConnectionTask:", e)
         finally:
@@ -46,7 +46,7 @@ async def ReceivingTask():
             decoded_string = data.decode("utf-8")            
             print('Data: ', decoded_string , type(decoded_string))            
         except asyncio.CancelledError:
-            print("Peripheral task cancelled")
+            print("Peripheral task canceled")
         except Exception as e:
             print("Error in ReceivingTask:", e)
         finally:
