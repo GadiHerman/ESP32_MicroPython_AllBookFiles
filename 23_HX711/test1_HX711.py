@@ -24,8 +24,7 @@ class HX711:
             self.pd_sck.value(0)
             sleep_us(1)
             
-        # נשלח פולסים נוספים בהתאם לרווח הרצוי
-        print(self.gain == 128 and 1 or self.gain == 64 and 3 or 2)
+        # נשלח פולסים נוספים בהתאם להגבר הרצוי
         for _ in range(self.gain == 128 and 1 or self.gain == 64 and 3 or 2):
             self.pd_sck.value(1)
             sleep_us(1)
