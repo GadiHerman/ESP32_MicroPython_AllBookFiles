@@ -29,7 +29,7 @@ def led_off(message):
     pin_led.off()
     bot.send(id, 'The LED is off!')
     
-bot = utelegram.ubot('7586682133:AAF5DwqgVzggB2kEkla8N2uAGtKdbovCdjA')
+bot = utelegram.ubot('7586682133:AXXXXXXXXXXXXXXXXXXXXXXXXXXXXA')
 bot.register('/on', led_on)
 bot.register('/off', led_off)
 bot.set_default_handler(get_message)

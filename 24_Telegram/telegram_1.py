@@ -8,7 +8,7 @@ def reply_ping(message):
     print(message)
     bot.send(message['message']['chat']['id'], 'pong')
 
-bot = utelegram.ubot('7586682133:AAF5DwqgVzggB2kEkla8N2uAGtKdbovCdjA')
+bot = utelegram.ubot('7586682133:AXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXA')
 bot.register('/ping', reply_ping)
 bot.set_default_handler(get_message)
 
