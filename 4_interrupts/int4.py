@@ -1,7 +1,6 @@
 import time
 from micropython import const
-from machine import Pin, Timer
-
+from machine import Pin
 
 BUTTON_A_PIN = const(26)
 BUTTON_B_PIN = const(25)
@@ -10,7 +9,6 @@ led1=Pin(13,Pin.OUT)
 led2=Pin(12,Pin.OUT)
 led3=Pin(14,Pin.OUT)
 led4=Pin(27,Pin.OUT)
-
 
 class Button:
     """
@@ -31,10 +29,8 @@ class Button:
 
         pin.irq(trigger=trigger, handler=self.debounce_handler)
 
-
     def call_callback(self, pin):
         self.callback(pin)
-
 
     def debounce_handler(self, pin):
         if time.ticks_ms() > self._next_call:
@@ -43,14 +39,12 @@ class Button:
         #else:
         #    print("debounce: %s" % (self._next_call - time.ticks_ms()))
        
-       
 def button_a_callback(pin):
     print("Button A (%s) changed to: %r" % (pin, pin.value()))
     led1.value(1)
     led2.value(1)
     led3.value(1)
     led4.value(1)
-
 
 def button_b_callback(pin):
     print("Button B (%s) changed to: %r" % (pin, pin.value()))
@@ -59,12 +53,8 @@ def button_b_callback(pin):
     led3.value(0)
     led4.value(0)
 
-
 def button_c_callback(pin):
     print("Button C (%s) changed to: %r" % (pin, pin.value()))
-
-
-
 
 button_a = Button(pin=Pin(BUTTON_A_PIN, mode=Pin.IN, pull=Pin.PULL_UP), callback=button_a_callback)
 button_b = Button(pin=Pin(BUTTON_B_PIN, mode=Pin.IN, pull=Pin.PULL_UP), callback=button_b_callback)

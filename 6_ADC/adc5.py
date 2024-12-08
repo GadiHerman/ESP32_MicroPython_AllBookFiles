@@ -13,7 +13,6 @@ x.atten(ADC.ATTN_11DB)
 y.atten(ADC.ATTN_11DB)
 #joystick setup----------------------------
 
-
 #leds setup--------------------------------
 led1 = Pin(27,Pin.OUT)
 led2 = Pin(26,Pin.OUT)

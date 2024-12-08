@@ -6,7 +6,7 @@ import os
 import sys
 import json
 
-PUBLISH_PERIOD   = 5
+PUBLISH_PERIOD = 5
 timeSave = 0
 
 CHANNEL_TOKEN = 'token_jr________________ku'

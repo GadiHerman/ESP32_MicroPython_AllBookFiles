@@ -1,7 +1,6 @@
 from machine import Pin, ADC
 import time
 
-
 adc = ADC(Pin(34))
 adc.atten(ADC.ATTN_11DB)
 while True:

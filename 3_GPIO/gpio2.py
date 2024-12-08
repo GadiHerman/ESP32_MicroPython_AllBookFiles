@@ -1,7 +1,6 @@
 from machine import Pin
 import time
 
-
 pin_led = Pin(13, mode=Pin.OUT)
 pin_led.on()
 time.sleep(0.5)

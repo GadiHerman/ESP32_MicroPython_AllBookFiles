@@ -1,21 +1,15 @@
 from machine import Pin, time_pulse_us
 from utime import sleep_us
 
-
 __version__ = '0.2.1'
 __author__ = 'Roberto Sánchez'
 __license__ = "Apache License 2.0. https://www.apache.org/licenses/LICENSE-2.0"
-
 
 class HCSR04:
     """
     Driver to use the untrasonic sensor HC-SR04.
     The sensor range is between 2cm and 4m.
-
-
     The timeouts received listening to echo pin are converted to OSError('Out of range')
-
-
     """
     # echo_timeout_us is based in chip range limit (400cm)
     def __init__(self, trigger_pin, echo_pin, echo_timeout_us=500*2*30):
