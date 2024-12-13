@@ -13,5 +13,5 @@ try:
     
 except Exception as e:
     print('The fingerprint sensor could not be initialized!')
-    print('Exception message: ' + str(e))
+    print('Error: ', str(e))
     sys.exit()

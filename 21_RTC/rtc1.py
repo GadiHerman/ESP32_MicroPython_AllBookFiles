@@ -5,8 +5,8 @@ import utime
 from machine import RTC
 
 
-ssid = "Herman2.4G"      #wifi name
-pw = "gal12asd"           #wifi password
+ssid = "__XXX___"      #wifi name
+pw = "__XXX___"           #wifi password
 web_query_delay = 200000    #interval time of web JSON query
 url = "http://www.worldtimeapi.org/api/timezone/Asia/Jerusalem.txt"
 
