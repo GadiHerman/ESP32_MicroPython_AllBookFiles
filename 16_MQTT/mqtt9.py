@@ -10,7 +10,7 @@ import json
 uart = UART(2, 115200)
 PING_PERIOD = 120
 
-CHANNEL_TOKEN = 'token_jr______________ku'
+CHANNEL_TOKEN = 'token_jraHGeXa59XhEUku'
 CHANNEL_NAME  = 'esp32'
 RESOURCE_NAME = 'getdata'
 MQTT_SERVER = 'mqtt.beebotte.com'
