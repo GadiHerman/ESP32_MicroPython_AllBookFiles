@@ -24,24 +24,15 @@ led_arr = [led1,led2,led3,led4,led5]
 active_led = [1,0,0,0,0]
 #leds setup--------------------------------
 
-one_location = int
-
 while True :
-    
-    for i in range(len(led_arr)): #reset all leds
-        led_arr[i].value(0)
-        
-    one_location = active_led.index(1) #finds the active led
-    
-    if x.read() <= 500: #checks if the joystick moved to the left
+             
+    if x.read() <= 500: 
         active_led = active_led[1:] + active_led[:1]
-    elif x.read() >= 2200: #checks if the joystick moved to the right
+    elif x.read() >= 2200: 
         active_led = active_led[4:] + active_led[:4]
-        
-    led_arr[one_location].value(1)
-    sleep(0.2)
+    
+    for i in range(len(led_arr)):
+        led_arr[i].value(active_led[i])
 
-# def check_joystick(): #test function to see the joystick values
-#     print("x= " ,x.read())
-#     print("y= " ,y.read(), "\n")
-
+    #print("x= " ,x.read(), "   y=" ,y.read() , "   sw=" , sw.value())
+    sleep(0.1)
