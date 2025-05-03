@@ -1,4 +1,4 @@
-from machine import DAC, Pin
+from machine import DAC, Pin , reset
 import time
 dac = DAC(Pin(25))
 for i in range(10):
@@ -11,3 +11,4 @@ for i in range(10):
     dac.write(255)
     print("3.3V")
     time.sleep_ms(3000)
+reset()
