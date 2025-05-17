@@ -1,60 +1,67 @@
 from machine import UART
-import asyncio
-from random import randint
+import utime
 
-uart = UART(2, 9600)
-uart.init(9600, bits=8, parity=None, stop=1)
-print(uart)
+"""
+ESP32 UART2           HC-06 / CH-05 
+GPIO_17_UART2_TX           RX
+GPIO_16_UART2_RX           TX
 
-async def myTask1(lock):
-    while True:
-        try:
-            await lock.acquire()
-            if uart.any():
-                data = uart.readline()
-                #print('received:',data)
-                # Convert byte string to a string using the decode() method
-                decoded_string = data.decode("utf-8")            
-                print('Data: ', decoded_string , type(decoded_string))            
+To enter AT-Command mode in HC05:
+Press & Hold the onboard button while power on.
 
-        except asyncio.CancelledError:
-            print("Peripheral task cancelled")
-        except Exception as e:
-            print("Error in ConnectionTask:", e)
-        finally:
-            await asyncio.sleep_ms(15)
-            lock.release()
-        
-async def myTask2(lock):
-    while True:
-        try:
-            await lock.acquire()
-            num = randint(0,100)
-            Data = str(num)+"\n"
-            # Convert string to byte string using the encode() method
-            sendData = Data.encode('utf-8')
-            uart.write(sendData)
-            print('Sent response:',sendData)          
-        except asyncio.CancelledError:
-            print("Peripheral task cancelled")
-        except Exception as e:
-            print("Error in ConnectionTask:", e)
-        finally:
-            await asyncio.sleep_ms(1000)
-            lock.release()
-        
-            
-#Run all tasks at the same time 
-async def main():
-    lock = asyncio.Lock()  # Main Lock instance
-    t1 = asyncio.create_task(myTask1(lock))
-    t2 = asyncio.create_task(myTask2(lock))
-    await asyncio.gather(t1, t2)
+To enter AT-Command mode in HC06:
+Power-up in NOT CONNECTED
+
+Baudrate for at-comand mode in HC05: 38400
+Baudrate for at-comand mode in HC06: 9600
+
+"""
+NAME = "HC05_MGK3"
+PASSWORD = "1234"
+uart2 = UART(2,baudrate=38400)    # at-comand baudrate for HC05
+# uart2 = UART(2,baudrate=9600)   # at-comand baudrate for HC06 
+print(uart2)
+
+#2 sec timeout is arbitrarily chosen
+def sendAT(cmd, uart=uart2, timeout=2000):
+    print("CMD: " + cmd)
+    uart.write(cmd)
+    waitResp(uart, timeout)
     
-#Running the main program
-try:
-    asyncio.run(main())
-except KeyboardInterrupt:
-    print("Program stopped by user")
+def waitResp(uart=uart2, timeout=2000):
+    prvMills = utime.ticks_ms()
+    resp = b""
+    while (utime.ticks_ms()-prvMills)<timeout:
+        if uart.any():
+            resp = b"".join([resp, uart.read(1)])
+        decoded_string = resp.decode("utf-8")
+    print(decoded_string)
 
+#commands for HC-06 version:   VERSION:3.0-20170609
+#commands for HC-05 version:   VERSION:2.0-20100601
+print("---- Start ----")
+waitResp()
+sendAT("AT\r\n")
+sendAT("AT+ORGL\r\n")           #Restore default setting
+sendAT("AT+VERSION\r\n")
+sendAT("AT+UART?\r\n")
+sendAT("AT+UART=9600,0,0\r\n")  #9600 baud, 1 stop, parity=none
+sendAT("AT+UART?\r\n")
+sendAT("AT+PSWD?\r\n")
+sendAT("AT+PSWD=\""+PASSWORD+"\"\r\n") 
+sendAT("AT+PSWD?\r\n")
+sendAT("AT+NAME=\""+NAME+"\"\r\n")
+sendAT("AT+NAME?\r\n")
+sendAT("AT+ADDR?\r\n")
+print("---- Done ----")
 
+#commands for HC-06 version:   hc01.comV2.0  ,  linvorV1.8
+# print("---- Start ----")
+# waitResp()
+# sendAT("AT")
+# sendAT("AT+VERSION")
+# sendAT("AT+BAUD4")            #4 ——> 9600
+# sendAT("AT+NAME"+NAME)
+# sendAT("AT+PIN"+PASSWORD)
+# sendAT("AT+PN")               #AT+PN sets no parity
+# print("---- Done ----")

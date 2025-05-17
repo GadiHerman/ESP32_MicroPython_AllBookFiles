@@ -1,26 +1,22 @@
-import uasyncio as asyncio
+import time
 from machine import UART
+
 uart = UART(2, 115200)
 
+def sender(i):
+    s = 'Hello uart' + str(i) + '\n'
+    uart.write(s)
+    print(s)
 
-async def sender():
-    i=0
-    while True:
-        s = 'Hello uart' + str(i) + '\n'
-        uart.write(s)
-        print(s)
-        await asyncio.sleep(2)
-        i=i+1
+def receiver():
+    if uart.any():
+        res = uart.readline()
+        if res:
+            print('Received', res)
 
-
-async def receiver():
-    sreader = asyncio.StreamReader(uart)
-    while True:
-        res = await sreader.readline()
-        print('Recieved', res)
-
-
-loop = asyncio.get_event_loop()
-loop.create_task(sender())
-loop.create_task(receiver())
-loop.run_forever()
+i = 0
+while True:
+    sender(i)
+    receiver()
+    i += 1
+    time.sleep(5)

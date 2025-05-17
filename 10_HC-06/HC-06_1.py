@@ -1,38 +1,18 @@
 from machine import UART
-import utime
+import time
 
-uart = UART(2, 9600)
-uart.init(9600, bits=8, parity=None, stop=1)
-print(uart)
+bt_uart = UART(2, baudrate=38400)
+#bt_uart = UART(2, baudrate=9600)
 
-print("---------------------------------------------------------------------")
-print("|  Module HC-06 configuration                                       |")
-print("|  enter AT              -- To test serial communication            |")
-print("|  enter AT+NAME??????   -- To modify the module name               |")
-print("|  enter AT+PIN1234      -- To modify the module PIN code           |")
-print("|  enter AT+BAUD4        -- To modify the module communication speed|")
-print("|  Note: 1 for 1200,  2 for 2400,  3 for 4800,  4 for 9600          |")
-print("|        5 for 19200, 6 for 38400, 7 for 57600, 8 for 115200        |")
-print("---------------------------------------------------------------------")
+print("Enter AT commands (type and press Enter):")
 
 while True:
-    print("ENTER AT Commands: ")
-    try:
-        str = input()
-        uart.write(str)
-        utime.sleep_ms(100)
-    except OSError:
-        pass
+    cmd = input(">> ")
+    bt_uart.write(cmd + "\r\n")
 
-    # wait for response    
-    start_time = utime.ticks_ms()
-    timeout = False
-    while not uart.any() and not timeout:
-        if utime.ticks_diff(utime.ticks_ms(), start_time) > 500:
-            timeout = True
-    if timeout:
-        print('Failed, response timed out')
-    else:
-        buf = uart.read()
-        print("received:",buf)
-    utime.sleep_ms(600)
+    time.sleep(0.2)
+
+    while bt_uart.any():
+        response = bt_uart.readline()
+        if response:
+            print(response.decode().strip())
