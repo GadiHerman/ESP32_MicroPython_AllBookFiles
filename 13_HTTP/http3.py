@@ -1,9 +1,7 @@
 from machine import Pin
 import socket
 
-
 led = Pin(2, Pin.OUT)
-
 
 def web_page():
   if led.value() == 1:
@@ -48,39 +46,29 @@ def web_page():
   """
   return html
 
-
 s = socket.socket()
-ai = socket.getaddrinfo("0.0.0.0", 8080)
-addr = ai[0][-1]
-
-
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-
-s.bind(addr)
+s.bind(('0.0.0.0', 8080))
 s.listen(5)
 print("Listening, connect your browser to http://<this_host>:8080/")
 
-
-
-
 while True:
-  conn, addr = s.accept()
+  client_socket, addr = s.accept()
   print('Got a connection from %s' % str(addr))
-  request = conn.recv(1024)
+  request = client_socket.recv(1024)
   request = str(request)
   print('Content = %s' % request)
-  led_on = request.find('/?led=on')
-  led_off = request.find('/?led=off')
-  if led_on == 6:
+  
+  if '/?led=on' in request:
     print('LED ON')
     led.value(1)
-  if led_off == 6:
+  elif '/?led=off' in request:
     print('LED OFF')
-    led.value(0)
+    led.value(0)      
+
   response = web_page()
-  conn.send('HTTP/1.1 200 OK\n')
-  conn.send('Content-Type: text/html\n')
-  conn.send('Connection: close\n\n')
-  conn.sendall(response)
-  conn.close()
+  client_socket.send('HTTP/1.1 200 OK\n')
+  client_socket.send('Content-Type: text/html\n')
+  client_socket.send('Connection: close\n\n')
+  client_socket.sendall(response)
+  client_socket.close()
