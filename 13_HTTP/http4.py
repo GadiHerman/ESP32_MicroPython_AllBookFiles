@@ -13,8 +13,7 @@ def read_temperature():
     return temperature_celsius
 
 def start_temperature_server():
-    s = socket.socket()
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('0.0.0.0', 8080))
     s.listen(5)
     print("Listening, connect your browser to http://<this_host>:8080/")
