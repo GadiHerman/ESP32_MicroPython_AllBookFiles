@@ -1,5 +1,4 @@
 from umqtt.simple import MQTTClient
-import ujson
 import utime
 
 
