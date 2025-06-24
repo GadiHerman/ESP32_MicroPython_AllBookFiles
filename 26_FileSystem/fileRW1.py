@@ -1,0 +1,5 @@
+f = open("myFile.txt", "r")
+s = f.read()
+print(s)
+print(type(s))
+f.close()
