@@ -63,7 +63,7 @@ def play_wav_from_internal_storage(file_name):
     except OSError as e:
         print(f"Error opening or reading WAV file: {e}")
     except Exception as e:
-        print(f"An unexpected error occurred: {type(e).__name__} - {e}")
+        print(f"An error occurred: {type(e).__name__} - {e}")
     finally:
         # Always deinitialize I2S to release resources
         if 'audio_out' in locals() and audio_out:
@@ -73,4 +73,3 @@ def play_wav_from_internal_storage(file_name):
 # Call the function to play the WAV file
 play_wav_from_internal_storage(WAV_FILE_NAME)
 print("Done with WAV playback example.")
-
