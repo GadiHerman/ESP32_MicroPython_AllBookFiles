@@ -12,3 +12,12 @@ for (ssid, bssid, channel, RSSI, authmode, hidden) in sta_if.scan():
   print("   - BSSID: {:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}".format(*bssid))
   print("   - Hidden: {}".format(hidden))
   print()
+
+
+
+
+
+
+
+
+
